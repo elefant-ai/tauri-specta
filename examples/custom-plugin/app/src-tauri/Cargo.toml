@@ -9,12 +9,17 @@ edition = "2021"
 
 [build-dependencies]
 tauri-build = { version = "2.0.0-beta.18", features = [] }
+[dev-dependencies]
+specta-typescript = { workspace = true }
 
 [dependencies]
+rand = "0.8.5"
 tauri = { workspace = true, features = [] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tauri-plugin-specta-example = { path = "../../plugin" }
+specta = { workspace = true }
+tauri-specta = { path = "../../../../", features = ["derive", "typescript"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

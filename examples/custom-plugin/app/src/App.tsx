@@ -1,8 +1,10 @@
 import { Match, Switch, createSignal, onCleanup } from "solid-js";
 import { events, addNumbers } from "tauri-specta-custom-plugin";
+import * as bindings from "./bindings"
 
 function App() {
   const [latestNumber, setLatestNumber] = createSignal<number | null>(null);
+  const [latestLetter, setLatestLetter] = createSignal<string | null>(null);
 
   const [generatedNumber, setGeneratedNumber] = createSignal<
     { type: "loading" } | { type: "loaded"; value: number } | null
@@ -12,8 +14,13 @@ function App() {
     .listen((e) => setLatestNumber(e.payload))
     .then((unlisten) => onCleanup(unlisten));
 
+    bindings.events.randomLetter
+    .listen((e) => setLatestLetter(e.payload))
+    .then((unlisten) => onCleanup(unlisten));
+
   return (
     <div>
+        <p>Latest Random letter: {latestLetter()}</p>
       <p>Latest Random Number: {latestNumber()}</p>
       <button
         disabled={generatedNumber()?.type === "loading"}
